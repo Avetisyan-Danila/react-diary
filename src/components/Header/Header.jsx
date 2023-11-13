@@ -2,7 +2,7 @@ import './Header.css';
 
 function Header() {
 	return (
-		<>Logo</>
+		<img className="logo" width="180" src="/logo.svg" alt="Логотип дневника"/>
 	);
 }
 
