@@ -8,50 +8,50 @@ import DiaryAddButton from './components/DiaryAddButton/DiaryAddButton.jsx';
 import CardButton from './components/CardButton/CardButton.jsx';
 
 function App() {
-  const data = [
-    {
-      title: 'Подготовка к обновлению курсов',
-      text: 'Горные походы открывают удивительные природные ландшафты',
-      date: new Date()
-    },
-    {
-      title: 'Подготовка к обновлению курсов 2',
-      text: 'Горные походы открывают удивительные природные ландшафты 2',
-      date: new Date()
-    }
-  ];
+	const data = [
+		{
+			title: 'Подготовка к обновлению курсов',
+			text: 'Горные походы открывают удивительные природные ландшафты',
+			date: new Date()
+		},
+		{
+			title: 'Подготовка к обновлению курсов 2',
+			text: 'Горные походы открывают удивительные природные ландшафты 2',
+			date: new Date()
+		}
+	];
 
-  return (
-    <div className='app'>
-      <LeftPanel>
-        <Header />
+	return (
+		<div className='app'>
+			<LeftPanel>
+				<Header />
 
-        <DiaryAddButton />
+				<DiaryAddButton />
 
-        <DiaryList>
-          <CardButton>
-            <DiaryItem
-              title={data[0].title}
-              text={data[0].text}
-              date={data[0].date}
-            />
-          </CardButton>
+				<DiaryList>
+					<CardButton>
+						<DiaryItem
+							title={data[0].title}
+							text={data[0].text}
+							date={data[0].date}
+						/>
+					</CardButton>
 
-          <CardButton>
-            <DiaryItem
-              title={data[1].title}
-              text={data[1].text}
-              date={data[1].date}
-            />
-          </CardButton>
-        </DiaryList>
-      </LeftPanel>
+					<CardButton>
+						<DiaryItem
+							title={data[1].title}
+							text={data[1].text}
+							date={data[1].date}
+						/>
+					</CardButton>
+				</DiaryList>
+			</LeftPanel>
 
-      <Body>
+			<Body>
         Body
-      </Body>
-    </div>
-  );
+			</Body>
+		</div>
+	);
 }
 
 export default App;
