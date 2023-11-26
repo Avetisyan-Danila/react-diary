@@ -14,14 +14,16 @@ function App() {
 		{
 			id: 1,
 			title: 'Подготовка к обновлению курсов',
-			text: 'Горные походы открывают удивительные природные ландшафты',
-			date: new Date()
+			date: new Date(),
+			tag: '',
+			text: 'Горные походы открывают удивительные природные ландшафты'
 		},
 		{
 			id: 2,
 			title: 'Подготовка к обновлению курсов 2',
-			text: 'Горные походы открывают удивительные природные ландшафты 2',
-			date: new Date()
+			date: new Date(),
+			tag: '',
+			text: 'Горные походы открывают удивительные природные ландшафты 2'
 		}
 	];
 
@@ -58,13 +60,14 @@ function App() {
 					{data.length === 0
 						? <p>Записей пока нет, добавьте первую</p>
 						: data.sort(sortData).map(
-							({id, title, text, date}) => {
+							({id, title, date, tag, text}) => {
 								return (
 									<CardButton key={id}>
 										<DiaryItem
 											title={title}
-											text={text}
 											date={date}
+											tag={tag}
+											text={text}
 										/>
 									</CardButton>
 								);

@@ -44,19 +44,42 @@ function DiaryForm({onSubmit}) {
 	};
   
 	return (
-		<form className={styles['diary-form']} onSubmit={addDiaryItem}>
-			<input placeholder="title" type="text" name="title" className={cn(styles.input, {
-				[styles.invalid]: !formValidState.title
-			})} />
-			<input type="date" name="date" className={cn(styles.input, {
-				[styles.invalid]: !formValidState.date
-			})} />
-			<input type="text" name="tag" placeholder="tag" className={styles.input} />
-			<textarea placeholder="text" name="text" rows="5" className={cn(styles.input, {
+		<form className={styles['form']} onSubmit={addDiaryItem}>
+			<div className={styles['form-title']}>
+				<input placeholder="Введите текст..." type="text" name="title" className={cn(styles['input-title'], {
+					[styles.invalid]: !formValidState.title
+				})} />
+
+				{/*<img src="/archive.svg" alt="Иконка архива"/>*/}
+			</div>
+
+			<div className={styles['form-controls']}>
+				<div className={cn(styles['form-row'], {
+					[styles.invalid]: !formValidState.date
+				})}>
+					<label className={styles['form-label']} htmlFor="date">
+						<img src="/calendar.svg" alt="Иконка календаря"/>
+						<span>Дата</span>
+					</label>
+
+					<input type="date" name="date" id="date" className={styles.input} />
+				</div>
+
+				<div className={styles['form-row']}>
+					<label className={styles['form-label']} htmlFor="tag">
+						<img src="/folder.svg" alt="Иконка папки"/>
+						<span>Метки</span>
+					</label>
+
+					<input type="text" name="tag" id="tag" placeholder="Введите текст..." className={styles.input} />
+				</div>
+			</div>
+
+			<textarea placeholder="Введите текст..." name="text" rows="5" className={cn(styles.input, styles.textarea, {
 				[styles.invalid]: !formValidState.text
 			})} />
 
-			<Button>Отправить</Button>
+			<Button>Сохранить</Button>
 		</form>
 	);
 }
