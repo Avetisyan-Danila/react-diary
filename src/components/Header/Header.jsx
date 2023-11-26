@@ -1,8 +1,8 @@
-import './Header.css';
+import styles from  './Header.module.css';
 
 function Header() {
 	return (
-		<img className="logo" width="180" src="/logo.svg" alt="Логотип дневника"/>
+		<img className={styles.logo} width="180" src="/logo.svg" alt="Логотип дневника"/>
 	);
 }
 
