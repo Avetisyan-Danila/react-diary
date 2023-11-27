@@ -1,7 +1,7 @@
 import './DiaryItem.css';
 
 function DiaryItem({title, date, tag, text}) {
-	const formatedDate = new Intl.DateTimeFormat('ru-RU').format(date);
+	const formatedDate = new Intl.DateTimeFormat('ru-RU').format(new Date(date));
 
 	return (
 		<>

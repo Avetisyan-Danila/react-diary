@@ -7,27 +7,28 @@ import DiaryItem from './components/DiaryItem/DiaryItem.jsx';
 import DiaryAddButton from './components/DiaryAddButton/DiaryAddButton.jsx';
 import CardButton from './components/CardButton/CardButton.jsx';
 import DiaryForm from './components/DiaryForm/DiaryForm.jsx';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 function App() {
-	const INITIAL_DATA = [
-		{
-			id: 1,
-			title: 'Подготовка к обновлению курсов',
-			date: new Date(),
-			tag: '',
-			text: 'Горные походы открывают удивительные природные ландшафты'
-		},
-		{
-			id: 2,
-			title: 'Подготовка к обновлению курсов 2',
-			date: new Date(),
-			tag: '',
-			text: 'Горные походы открывают удивительные природные ландшафты 2'
-		}
-	];
+	const [data, setData] = useState([]);
 
-	const [data, setData] = useState(INITIAL_DATA);
+	useEffect(() => {
+		if (localStorage.getItem('data')) {
+			const storageData = JSON.parse(localStorage.getItem('data'));
+			if (storageData) {
+				setData(storageData.map(item => ({
+					...item,
+					date: new Date(item.date)
+				})));
+			}
+		}
+	}, []);
+
+	useEffect(() => {
+		if (data.length) {
+			localStorage.setItem('data', JSON.stringify(data));
+		}
+	}, [data]);
 
 	const addItem = item => {
 		setData(oldData => [
