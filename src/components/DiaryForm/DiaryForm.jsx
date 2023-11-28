@@ -29,12 +29,16 @@ function DiaryForm({ onSubmit }) {
     }
   }, [isFormReadyToSubmit]);
 
+  const onChange = (e) => {
+    dispatchForm({
+      type: "SET_VALUE",
+      payload: { [e.target.name]: e.target.value },
+    });
+  };
+
   const addDiaryItem = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-
-    dispatchForm({ type: "SUBMIT", payload: formProps });
+    dispatchForm({ type: "SUBMIT" });
   };
 
   return (
@@ -43,6 +47,7 @@ function DiaryForm({ onSubmit }) {
         <input
           placeholder="Введите текст..."
           type="text"
+          onChange={onChange}
           value={values.title}
           name="title"
           className={cn(styles["input-title"], {
@@ -66,6 +71,7 @@ function DiaryForm({ onSubmit }) {
 
           <input
             type="date"
+            onChange={onChange}
             value={values.date}
             name="date"
             id="date"
@@ -81,6 +87,7 @@ function DiaryForm({ onSubmit }) {
 
           <input
             placeholder="Введите текст..."
+            onChange={onChange}
             type="text"
             value={values.tag}
             name="tag"
@@ -92,6 +99,7 @@ function DiaryForm({ onSubmit }) {
 
       <textarea
         placeholder="Введите текст..."
+        onChange={onChange}
         value={values.text}
         name="text"
         rows="5"
