@@ -1,11 +1,7 @@
-import './DiaryList.css';
+import "./DiaryList.css";
 
-function DiaryList({children}) {
-	return (
-		<div className='diary-list'>
-			{children}
-		</div>
-	);
+function DiaryList({ children }) {
+  return <div className="diary-list">{children}</div>;
 }
 
 export default DiaryList;
