@@ -1,17 +1,32 @@
 import styles from "./DiaryForm.module.css";
 import Button from "../Button/Button.jsx";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import cn from "classnames";
 import { formReducer, INITIAL_STATE } from "./DiaryForm.state.js";
 
 function DiaryForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
+  const titleRef = useRef();
+  const dateRef = useRef();
+
+  const focusError = (isValid) => {
+    switch (true) {
+      case !isValid.title:
+        titleRef.current.focus();
+        break;
+      case !isValid.date:
+        dateRef.current.focus();
+        break;
+    }
+  };
 
   useEffect(() => {
     let timerId;
 
     if (!isValid.title || !isValid.date) {
+      focusError(isValid);
+
       timerId = setTimeout(() => {
         dispatchForm({ type: "RESET_VALIDITY" });
       }, 1500);
@@ -45,6 +60,7 @@ function DiaryForm({ onSubmit }) {
     <form className={styles["form"]} onSubmit={addDiaryItem}>
       <div className={styles["form-title"]}>
         <input
+          ref={titleRef}
           placeholder="Введите текст..."
           type="text"
           onChange={onChange}
@@ -70,6 +86,7 @@ function DiaryForm({ onSubmit }) {
           </label>
 
           <input
+            ref={dateRef}
             type="date"
             onChange={onChange}
             value={values.date}
