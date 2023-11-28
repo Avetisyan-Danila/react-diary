@@ -11,7 +11,7 @@ function DiaryForm({ onSubmit }) {
   useEffect(() => {
     let timerId;
 
-    if (!isValid.title || !isValid.date || !isValid.text) {
+    if (!isValid.title || !isValid.date) {
       timerId = setTimeout(() => {
         dispatchForm({ type: "RESET_VALIDITY" });
       }, 1500);
