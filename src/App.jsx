@@ -7,37 +7,28 @@ import DiaryItem from "./components/DiaryItem/DiaryItem.jsx";
 import DiaryAddButton from "./components/DiaryAddButton/DiaryAddButton.jsx";
 import CardButton from "./components/CardButton/CardButton.jsx";
 import DiaryForm from "./components/DiaryForm/DiaryForm.jsx";
-import { useEffect, useState } from "react";
+import {useLocalStorage} from "./hooks/use-localstorage.hook.js";
+
+function mapData(data) {
+  if (data?.length) {
+    return data.map(i => ({
+      ...i,
+      date: new Date(i.date)
+    }))
+  } else {
+    return [];
+  }
+}
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    if (localStorage.getItem("data")) {
-      const storageData = JSON.parse(localStorage.getItem("data"));
-      if (storageData) {
-        setData(
-          storageData.map((item) => ({
-            ...item,
-            date: new Date(item.date),
-          }))
-        );
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (data.length) {
-      localStorage.setItem("data", JSON.stringify(data));
-    }
-  }, [data]);
+  const [data, setData] = useLocalStorage('data');
 
   const addItem = (item) => {
-    setData((oldData) => [
-      ...oldData,
+    setData([
+      ...mapData(data),
       {
         ...item,
-        id: oldData.length > 0 ? Math.max(...oldData.map((i) => i.id)) + 1 : 1,
+        id: data.length > 0 ? Math.max(...data.map((i) => i.id)) + 1 : 1,
         date: new Date(item.date),
       },
     ]);
@@ -59,10 +50,10 @@ function App() {
         <DiaryAddButton />
 
         <DiaryList>
-          {data.length === 0 ? (
+          {data?.length === 0 ? (
             <p>Записей пока нет, добавьте первую</p>
           ) : (
-            data.sort(sortData).map(({ id, title, date, tag, text }) => {
+            mapData(data).sort(sortData).map(({ id, title, date, tag, text }) => {
               return (
                 <CardButton key={id}>
                   <DiaryItem title={title} date={date} tag={tag} text={text} />
