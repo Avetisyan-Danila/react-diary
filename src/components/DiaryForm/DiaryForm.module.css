@@ -29,22 +29,6 @@
   gap: 15px;
 }
 
-.input-title {
-  width: 100%;
-  height: 39px;
-  padding: 0 0 15px 0;
-
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-  background: none;
-  outline: none;
-  transition: 0.2s ease;
-
-  font-family: 'Source Sans 3', sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-}
-
 .input {
   width: 100%;
 

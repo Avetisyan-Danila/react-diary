@@ -3,6 +3,7 @@ import Button from "../Button/Button.jsx";
 import { useEffect, useReducer, useRef } from "react";
 import cn from "classnames";
 import { formReducer, INITIAL_STATE } from "./DiaryForm.state.js";
+import Input from "../Input/Input.jsx";
 
 function DiaryForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
@@ -59,16 +60,15 @@ function DiaryForm({ onSubmit }) {
   return (
     <form className={styles["form"]} onSubmit={addDiaryItem}>
       <div className={styles["form-title"]}>
-        <input
+        <Input
           ref={titleRef}
           placeholder="Введите текст..."
           type="text"
           onChange={onChange}
           value={values.title}
           name="title"
-          className={cn(styles["input-title"], {
-            [styles.invalid]: !isValid.title,
-          })}
+          isValid={isValid.title}
+          appearance="title"
         />
 
         {/*<img src="/archive.svg" alt="Иконка архива"/>*/}
@@ -85,14 +85,14 @@ function DiaryForm({ onSubmit }) {
             <span>Дата</span>
           </label>
 
-          <input
+          <Input
             ref={dateRef}
+            isValid={isValid.date}
             type="date"
             onChange={onChange}
             value={values.date}
             name="date"
             id="date"
-            className={styles.input}
           />
         </div>
 
@@ -102,14 +102,13 @@ function DiaryForm({ onSubmit }) {
             <span>Метки</span>
           </label>
 
-          <input
+          <Input
             placeholder="Введите текст..."
             onChange={onChange}
             type="text"
             value={values.tag}
             name="tag"
             id="tag"
-            className={styles.input}
           />
         </div>
       </div>
