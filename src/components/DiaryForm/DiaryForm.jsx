@@ -1,15 +1,17 @@
 import styles from "./DiaryForm.module.css";
 import Button from "../Button/Button.jsx";
-import { useEffect, useReducer, useRef } from "react";
+import {useContext, useEffect, useReducer, useRef} from "react";
 import cn from "classnames";
 import { formReducer, INITIAL_STATE } from "./DiaryForm.state.js";
 import Input from "../Input/Input.jsx";
+import {UserContext} from "../../context/user.context.jsx";
 
 function DiaryForm({ onSubmit }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
   const titleRef = useRef();
   const dateRef = useRef();
+  const { userId } = useContext(UserContext);
 
   const focusError = (isValid) => {
     switch (true) {
@@ -59,6 +61,7 @@ function DiaryForm({ onSubmit }) {
 
   return (
     <form className={styles["form"]} onSubmit={addDiaryItem}>
+      {userId}
       <div className={styles["form-title"]}>
         <Input
           ref={titleRef}

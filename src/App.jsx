@@ -8,6 +8,7 @@ import DiaryAddButton from "./components/DiaryAddButton/DiaryAddButton.jsx";
 import CardButton from "./components/CardButton/CardButton.jsx";
 import DiaryForm from "./components/DiaryForm/DiaryForm.jsx";
 import {useLocalStorage} from "./hooks/use-localstorage.hook.js";
+import {UserContextProvider} from "./context/user.context.jsx";
 
 function mapData(data) {
   if (data?.length) {
@@ -43,31 +44,33 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <LeftPanel>
-        <Header />
+    <UserContextProvider>
+      <div className="app">
+        <LeftPanel>
+          <Header />
 
-        <DiaryAddButton />
+          <DiaryAddButton />
 
-        <DiaryList>
-          {data?.length === 0 ? (
-            <p>Записей пока нет, добавьте первую</p>
-          ) : (
-            mapData(data).sort(sortData).map(({ id, title, date, tag, text }) => {
-              return (
-                <CardButton key={id}>
-                  <DiaryItem title={title} date={date} tag={tag} text={text} />
-                </CardButton>
-              );
-            })
-          )}
-        </DiaryList>
-      </LeftPanel>
+          <DiaryList>
+            {data?.length === 0 ? (
+              <p>Записей пока нет, добавьте первую</p>
+            ) : (
+              mapData(data).sort(sortData).map(({ id, title, date, tag, text }) => {
+                return (
+                  <CardButton key={id}>
+                    <DiaryItem title={title} date={date} tag={tag} text={text} />
+                  </CardButton>
+                );
+              })
+            )}
+          </DiaryList>
+        </LeftPanel>
 
-      <Body>
-        <DiaryForm onSubmit={addItem} />
-      </Body>
-    </div>
+        <Body>
+          <DiaryForm onSubmit={addItem} />
+        </Body>
+      </div>
+    </UserContextProvider>
   );
 }
 
