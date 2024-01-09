@@ -22,7 +22,7 @@ export function formReducer(state, action) {
         isValid: INITIAL_STATE.isValid,
       };
     case "CLEAR":
-      return { ...state, values: INITIAL_STATE.values };
+      return INITIAL_STATE;
     case "SUBMIT": {
       const titleValidity = state.values.title?.trim().length;
       const dateValidity = state.values.date;
@@ -33,7 +33,7 @@ export function formReducer(state, action) {
           title: titleValidity,
           date: dateValidity,
         },
-        isFormReadyToSubmit: titleValidity && dateValidity,
+        isFormReadyToSubmit: Boolean(titleValidity && dateValidity),
       };
     }
   }
