@@ -1,7 +1,7 @@
 import "./DiaryList.css";
 import CardButton from "../CardButton/CardButton.jsx";
 import DiaryItem from "../DiaryItem/DiaryItem.jsx";
-import {useContext} from "react";
+import {useContext, useMemo} from "react";
 import {UserContext} from "../../context/user.context.jsx";
 
 function DiaryList({ data }) {
@@ -15,14 +15,18 @@ function DiaryList({ data }) {
     }
   };
 
+  const filteredItems = useMemo(() => (
+    data.filter((item) => item.userId === userId).sort(sortData)
+  ), [data, userId])
+
+  if (data.length === 0) {
+    return <p>Записей пока нет, добавьте первую</p>;
+  }
+
   return (
     <div className="diary-list">
-      {data.length === 0 ? (
-        <p>Записей пока нет, добавьте первую</p>
-      ) : (
-        data
-          .filter((item) => item.userId === userId)
-          .sort(sortData)
+      {
+        filteredItems
           .map(({ id, title, date, tag, text }) => {
             return (
               <CardButton key={id}>
@@ -30,7 +34,6 @@ function DiaryList({ data }) {
               </CardButton>
             );
           })
-        )
       }
     </div>
   );
