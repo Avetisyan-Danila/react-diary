@@ -1,12 +1,12 @@
 import styles from "./DiaryForm.module.css";
 import Button from "../Button/Button.jsx";
-import {useContext, useEffect, useReducer, useRef} from "react";
+import { useContext, useEffect, useReducer, useRef } from "react";
 import cn from "classnames";
 import { formReducer, INITIAL_STATE } from "./DiaryForm.state.js";
 import Input from "../Input/Input.jsx";
-import {UserContext} from "../../context/user.context.jsx";
+import { UserContext } from "../../context/user.context.jsx";
 
-function DiaryForm({ onSubmit }) {
+function DiaryForm({ onSubmit, data }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
   const titleRef = useRef();
@@ -25,6 +25,10 @@ function DiaryForm({ onSubmit }) {
   };
 
   useEffect(() => {
+    dispatchForm({ type: "SET_VALUE", payload: { ...data } });
+  }, [data]);
+
+  useEffect(() => {
     let timerId;
 
     if (!isValid.title || !isValid.date) {
@@ -41,7 +45,7 @@ function DiaryForm({ onSubmit }) {
   }, [isValid]);
 
   useEffect(() => {
-    dispatchForm({type: "SET_VALUE", payload: { userId }});
+    dispatchForm({ type: "SET_VALUE", payload: { userId } });
   }, [userId]);
 
   useEffect(() => {
@@ -52,7 +56,10 @@ function DiaryForm({ onSubmit }) {
   }, [isFormReadyToSubmit]);
 
   const onChange = (e) => {
-    dispatchForm({type: "SET_VALUE", payload: { [e.target.name]: e.target.value }});
+    dispatchForm({
+      type: "SET_VALUE",
+      payload: { [e.target.name]: e.target.value },
+    });
   };
 
   const addDiaryItem = (e) => {
@@ -93,7 +100,11 @@ function DiaryForm({ onSubmit }) {
             isValid={isValid.date}
             type="date"
             onChange={onChange}
-            value={values.date}
+            value={
+              values.date
+                ? new Date(values.date).toISOString().slice(0, 10)
+                : ""
+            }
             name="date"
             id="date"
           />
