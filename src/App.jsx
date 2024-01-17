@@ -21,7 +21,7 @@ function mapData(data) {
 
 function App() {
   const [data, setData] = useLocalStorage("data");
-  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const addItem = (item) => {
     if (!item.id) {
@@ -48,18 +48,26 @@ function App() {
     }
   };
 
+  const deleteItem = (id) => {
+    setData([...data.filter((i) => i.id !== id)]);
+  };
+
   return (
     <div className="app">
       <LeftPanel>
         <Header />
 
-        <DiaryAddButton />
+        <DiaryAddButton clearForm={() => setSelectedItem(null)} />
 
         <DiaryList data={mapData(data)} setItem={setSelectedItem} />
       </LeftPanel>
 
       <Body>
-        <DiaryForm onSubmit={addItem} data={selectedItem} />
+        <DiaryForm
+          onSubmit={addItem}
+          onDelete={deleteItem}
+          data={selectedItem}
+        />
       </Body>
     </div>
   );

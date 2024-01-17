@@ -6,7 +6,7 @@ import { formReducer, INITIAL_STATE } from "./DiaryForm.state.js";
 import Input from "../Input/Input.jsx";
 import { UserContext } from "../../context/user.context.jsx";
 
-function DiaryForm({ onSubmit, data }) {
+function DiaryForm({ onSubmit, data, onDelete }) {
   const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
   const { isValid, isFormReadyToSubmit, values } = formState;
   const titleRef = useRef();
@@ -25,7 +25,11 @@ function DiaryForm({ onSubmit, data }) {
   };
 
   useEffect(() => {
-    dispatchForm({ type: "SET_VALUE", payload: { ...data } });
+    if (!data) {
+      dispatchForm({ type: "CLEAR" });
+    } else {
+      dispatchForm({ type: "SET_VALUE", payload: { ...data } });
+    }
   }, [data]);
 
   useEffect(() => {
@@ -53,7 +57,7 @@ function DiaryForm({ onSubmit, data }) {
       onSubmit(values);
       dispatchForm({ type: "CLEAR" });
     }
-  }, [isFormReadyToSubmit]);
+  }, [isFormReadyToSubmit, values, onSubmit]);
 
   const onChange = (e) => {
     dispatchForm({
@@ -65,6 +69,11 @@ function DiaryForm({ onSubmit, data }) {
   const addDiaryItem = (e) => {
     e.preventDefault();
     dispatchForm({ type: "SUBMIT" });
+  };
+
+  const deleteItem = () => {
+    onDelete(data.id);
+    dispatchForm({ type: "CLEAR" });
   };
 
   return (
@@ -81,7 +90,15 @@ function DiaryForm({ onSubmit, data }) {
           appearance="title"
         />
 
-        {/*<img src="/archive.svg" alt="Иконка архива"/>*/}
+        {data?.id && (
+          <button
+            className={styles["form-delete"]}
+            type="button"
+            onClick={deleteItem}
+          >
+            <img src="/archive.svg" alt="Кнопка удалить" />
+          </button>
+        )}
       </div>
 
       <div className={styles["form-controls"]}>

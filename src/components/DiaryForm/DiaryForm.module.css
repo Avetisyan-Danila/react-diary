@@ -12,6 +12,28 @@
   width: 100px;
 }
 
+.form-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-delete {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: 0.2s ease;
+}
+
+.form-delete:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .form-row {
   display: flex;
   align-items: center;
